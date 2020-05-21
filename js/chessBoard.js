@@ -29,6 +29,8 @@ function onDrop(source, target) {
   // illegal move
   if (move === null) return 'snapback'
 
+  fensMaker(); //create a history of fens during normal play
+
   updateStatus()
 }
 
@@ -107,13 +109,13 @@ $('#italianGameBtn').on('click', function () {
   updateFen();
 })
 
-//example of how to reset to start position
-$('#startPositionBtn').on('click', function () {
-  game.reset();
-  board.position('start');
-  game = new Chess();
-  updateFen();
-})
+// //example of how to reset to start position
+// $('#startPositionBtn').on('click', function () {
+//   game.reset();
+//   board.position('start');
+//   game = new Chess();
+//   updateFen();
+// })
 
 //flip board
 $('#flipBoardBtn').on('click', function () {
@@ -142,7 +144,7 @@ function updateFen() {
 
 //*****PGN STUFF*********/
 const pgn = [
-  
+
   '[Event "Paris"]',
   '[Site "Paris FRA"]',
   '[Date "1858.??.??"]',
@@ -163,23 +165,23 @@ const pgn = [
 
 var index = 0;
 var fens = [];
+var stop = true;
 
 //loadPGN
 $('#loadPgnBtn').on('click', function () {
   game.reset();
   game.load_pgn(pgn.join('\n'));
   updateFen();
-  index=0;
+  index = 0;
   fens = [];
   fensMaker();
 })
 
-function fensMaker(){
+function fensMaker() {
   var moves = game.history();
   var tmpGame = new Chess();
   var startingPos = tmpGame.fen();
-  for(var i=0; i<moves.length; ++i)
-  {
+  for (var i = 0; i < moves.length; ++i) {
     tmpGame.move(moves[i]);
     fens[i] = tmpGame.fen();
   }
@@ -191,45 +193,104 @@ function fensMaker(){
 
 // If Prev button clicked, move backward one
 $('#prevBtn').on('click', function () {
- console.log(index);
- if(index == fens.length) --index;
-  if(index > 0){
-    console.log(index);
+  if (index == fens.length) --index;
+  if (index > 0) {
     board.position(fens[--index]);
-    }
+  }
+  $fen.html(game.fen());
+  //****UPDATE GAME FEN**************************************************************/
+  updateStatus();
 });
 
 // If Next button clicked, move forward one
 $('#nextBtn').on('click', function () {
-  if(index < fens.length){
-  board.position(fens[++index]);
+  //if (fens.length == 0) fensMaker();
+  if (index < fens.length) {
+    board.position(fens[++index]);
   }
+  updateStatus();
 });
 
 // If Start button clicked, go to start position
 $('#startPositionBtn2').on('click', function () {
+  //if (fens.length == 0) fensMaker();
   board.position(fens[0]);
-  index=0;
+  index = 0;
+  updateStatus();
 });
 
 // If End button clicked, go to end position
 $('#endPositionBtn').on('click', function () {
+  //if (fens.length == 0) fensMaker();
   board.position(fens[fens.length - 1]);
-  index=fens.length;
+  index = fens.length;
+  updateStatus();
+});
+
+// Start a new Game
+$('#newGameBtn').on('click', function () {
+  fens = [];
+  game.reset();
+  board.position('start');
+  //game = new Chess();
+  //updateFen();
+  updateStatus();
 });
 
 // If Play button clicked, animate moves from current position until end
-$('#playBtn').on('click', function () {
+$('#playBtn').on('click', async function () {
   //loop through game fens from current position until end
   //at each iteration, use board.move(currentFens) to animate the piece
-  console.log("play btn clicked");
+  //console.log("play btn clicked");
+
+  stop = !stop;
   var moves = game.history();
-  for(var i=0; i<fens.length; ++i)
-  {
-    board.move(moves[i]);
+
+  //console.log(moves.length);
+  for (var i = index; i < fens.length; ++i) {
+    if(!stop)
+    {
+
+    //game.move(fens[i]);
+    board.position(fens[i]);
+    await sleep(1000);
+    }
+
+
   }
-  board.move('e2-e4');
+
+  //get current fen position from chessboard.js -- board.fen();
+  //set current fen position to chess.js --  game.load(fen)
+  game.load(fens[1]);
+
+  //game.move(moves[0]);
+  //board.position(game.fen());
+  //game.load(board.fen());
+  console.log(game.fen());
+
+
+
+  //board.move('e2-e4');
+
+
+  // game.move('e4');
+  // board.position(game.fen());
+
+
+  //board.move('e4');
+  //board.move(moves[0]);
+  //console.log(moves[0])
+  //updateFen();
 });
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// function onDrop(){
+//   //fensMaker();
+//   console.log("moved")
+// }
 
 //#TODO
 //add status as the moves are clicked, currently status stays stuck at checkmate
@@ -243,6 +304,9 @@ $('#playBtn').on('click', function () {
 
 //#TODO
 //add custom board colors and pieces options
+
+//#TODO
+//grey/disable out buttons that cant be used, and grey out/disable play button if there if PGN is empty
 
 
 updateStatus();

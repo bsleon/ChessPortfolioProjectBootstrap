@@ -1,0 +1,23 @@
+{
+  "name": "chess-portfolio-project-bootstrap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lite": "lite-server",
+    "start": "npm run lite",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "lite-server": "^2.3.0"
+  },
+  "dependencies": {
+    "@chrisoakman/chessboardjs": "^1.0.0",
+    "bootstrap": "^4.0.0",
+    "chess.js": "^0.10.3",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.12.9"
+  }
+}

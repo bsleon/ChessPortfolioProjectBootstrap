@@ -91,7 +91,7 @@ board = Chessboard('myBoard', config)
 
 //example of how to setup a position(ruy lopez)
 $('#ruyLopezBtn').on('click', function () {
-  resetBoard();
+  game.reset();
   var ruyLopez = 'r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R'; //use min FEN
   board.position(ruyLopez); //set the board gui to FEN
   game = new Chess(ruyLopez + ' b KQkq - 3 3'); //set the chess.js to full FEN with turn
@@ -100,7 +100,7 @@ $('#ruyLopezBtn').on('click', function () {
 
 //italian game
 $('#italianGameBtn').on('click', function () {
-  resetBoard();
+  game.reset();
   var italianGame = 'r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R'; //use min FEN
   board.position(italianGame); //set the board gui to FEN
   game = new Chess(italianGame + ' b KQkq - 3 3'); //set the chess.js to full FEN with turn
@@ -109,7 +109,7 @@ $('#italianGameBtn').on('click', function () {
 
 //example of how to reset to start position
 $('#startPositionBtn').on('click', function () {
-  resetBoard();
+  game.reset();
   board.position('start');
   game = new Chess();
   updateFen();
@@ -120,72 +120,129 @@ $('#flipBoardBtn').on('click', function () {
   board.flip();
 })
 
-const pgn = [
-  '[Event "Casual Game"]',
-  '[Site "Berlin GER"]',
-  '[Date "1852.??.??"]',
-  '[EventDate "?"]',
-  '[Round "?"]',
-  '[Result "1/2 1/2"]',
-  '[White "Adolf Anderssen"]',
-  '[Black "Jean Dufresne"]',
-  '[ECO "C52"]',
-  '[WhiteElo "?"]',
-  '[BlackElo "?"]',
-  '[PlyCount "47"]',
-  '',
-  '1.e4 e5 2.Nf3 Nc6 3.Bb5 a6',
-  '4.Ba4 Nf6 5.O-O Be7 6.Re1 b5 7.Bb3 d6 8.c3 O-O 9.h3 Nb8 10.d4 Nbd7',
-  '11.c4 c6 12.cxb5 axb5 13.Nc3 Bb7 14.Bg5 b4 15.Nb1 h6 16.Bh4 c5 17.dxe5',
-  'Nxe4 18.Bxe7 Qxe7 19.exd6 Qf6 20.Nbd2 Nxd6 21.Nc4 Nxc4 22.Bxc4 Nb6',
-  '23.Ne5 Rae8 24.Bxf7+ Rxf7 25.Nxf7 Rxe1+ 26.Qxe1 Kxf7 27.Qe3 Qg5 28.Qxg5',
-  'hxg5 29.b3 Ke6 30.a3 Kd6 31.axb4 cxb4 32.Ra5 Nd5 33.f3 Bc8 34.Kf2 Bf5',
-  '35.Ra7 g6 36.Ra6+ Kc5 37.Ke1 Nf4 38.g3 Nxh3 39.Kd2 Kb5 40.Rd6 Kc5 41.Ra6',
-  'Nf2 42.g4 Bd3 43.Re6 1/2-1/2'
-]
-
-//loadPGN
-$('#loadPgnBtn').on('click', function () {
-  resetBoard();
-  game.load_pgn(pgn.join('\n'));
-  updateFen();
+//Move History
+$('#moveHistoryBtn').on('click', function () {
+  alert(game.history());
 })
 
-//TODO
-//MAKE A RESET FUNCTION
-function resetBoard() {
-  game.status = "";
-  $status.html(status);
-  game = new Chess();
-}
+
+//RESET FUNCTION
+// function resetBoard() {
+//   game.status = "";
+//   $status.html(status);
+//   game = new Chess();
+// }
 
 //update fen and status
 function updateFen() {
   $fen.html(game.fen()); //update game fen
   board.position(game.fen()); //update board fen
-  updateStatus()
+  updateStatus();
 }
 
-updateStatus()
+//*****PGN STUFF*********/
+const pgn = [
+  
+  '[Event "Paris"]',
+  '[Site "Paris FRA"]',
+  '[Date "1858.??.??"]',
+  '[EventDate "?"]',
+  '[Round "?"]',
+  '[Result "1-0"]',
+  '[White "Paul Morphy"]',
+  '[Black "Duke Karl / Count Isouard"]',
+  '[ECO "C41"]',
+  '[WhiteElo "?"]',
+  '[BlackElo "?"]',
+  '[PlyCount "33"]',
+  '',
+  '1.e4 e5 2.Nf3 d6 3.d4 Bg4 4.dxe5 Bxf3 5.Qxf3 dxe5 6.Bc4 Nf6 7.Qb3 Qe7',
+  '8.Nc3 c6 9.Bg5 b5 10.Nxb5 cxb5 11.Bxb5+ Nbd7 12.O-O-O Rd8',
+  '13.Rxd7 Rxd7 14.Rd1 Qe6 15.Bxd7+ Nxd7 16.Qb8+ Nxb8 17.Rd8# 1-0'
+]
+
+var index = 0;
+var fens = [];
+
+//loadPGN
+$('#loadPgnBtn').on('click', function () {
+  game.reset();
+  game.load_pgn(pgn.join('\n'));
+  updateFen();
+  index=0;
+  fens = [];
+  fensMaker();
+})
+
+function fensMaker(){
+  var moves = game.history();
+  var tmpGame = new Chess();
+  var startingPos = tmpGame.fen();
+  for(var i=0; i<moves.length; ++i)
+  {
+    tmpGame.move(moves[i]);
+    fens[i] = tmpGame.fen();
+  }
+  //add the start position
+  fens.unshift(startingPos);
+
+  index = fens.length;
+}
+
+// If Prev button clicked, move backward one
+$('#prevBtn').on('click', function () {
+ console.log(index);
+ if(index == fens.length) --index;
+  if(index > 0){
+    console.log(index);
+    board.position(fens[--index]);
+    }
+});
+
+// If Next button clicked, move forward one
+$('#nextBtn').on('click', function () {
+  if(index < fens.length){
+  board.position(fens[++index]);
+  }
+});
+
+// If Start button clicked, go to start position
+$('#startPositionBtn2').on('click', function () {
+  board.position(fens[0]);
+  index=0;
+});
+
+// If End button clicked, go to end position
+$('#endPositionBtn').on('click', function () {
+  board.position(fens[fens.length - 1]);
+  index=fens.length;
+});
+
+// If Play button clicked, animate moves from current position until end
+$('#playBtn').on('click', function () {
+  //loop through game fens from current position until end
+  //at each iteration, use board.move(currentFens) to animate the piece
+  console.log("play btn clicked");
+  var moves = game.history();
+  for(var i=0; i<fens.length; ++i)
+  {
+    board.move(moves[i]);
+  }
+  board.move('e2-e4');
+});
+
+//#TODO
+//add status as the moves are clicked, currently status stays stuck at checkmate
+//this is because the game position in chess.js isnt updated, only the board.position in chessboard.js is
+
+//#TODO
+//add a board setup feature
+
+//#TODO
+//figure out how to make notation outside of the board or make a custom board rim with notation
+
+//#TODO
+//add custom board colors and pieces options
 
 
-// function onChange (oldPos, newPos) {
-//   console.log('Position changed:')
-//   console.log('Old position: ' + Chessboard.objToFen(oldPos))
-//   console.log('New position: ' + Chessboard.objToFen(newPos))
-//   console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-// }
-
-// var config = {
-//   draggable: true,
-//   position: start,
-//   // onChange: onChange
-// }
-// var board = Chessboard('myBoard', config)
-
-// $('#ruyLopezBtn').on('click', function () {
-//   var ruyLopez = 'r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R'
-//   board.position(ruyLopez)
-// })
-
-// $('#startPositionBtn').on('click', board.start)
+updateStatus();

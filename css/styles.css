@@ -1,6 +1,9 @@
+/* @import url('../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css'); */
+
 body{
     background-color:#111111;
     color: #b3b1b1;
+    font-family: 'Font Awesome 5 Free';
 }
 
 /*************************** bootstrapmenu ***********************************************************/
@@ -45,4 +48,5 @@ body{
 #bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
     background-color: #111111;
 }
+
 /***************************End bootstrapmenu *******************************************************/

@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@chrisoakman/chessboardjs": "^1.0.0",
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "bootstrap": "^4.0.0",
     "chess.js": "^0.10.3",
     "jquery": "^3.3.1",

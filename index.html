@@ -15,10 +15,10 @@
   <link rel="stylesheet" href="node_modules/@chrisoakman/chessboardjs/dist/chessboard-1.0.0.min.css">
 
   <!-- favicon -->
-  <link rel="icon" href="favicon.png"/>
+  <link rel="icon" href="favicon.png" />
 
 
-  <title>Document</title>
+  <title>CHESSFEN</title>
 </head>
 
 <body>
@@ -46,26 +46,30 @@
         </div>
     </div> -->
   <div class="container">
-    <nav id="bootstrap-menu" class="navbar navbar-expand-sm navbar-dark bg-dark navbar-default navbar-fixed-top">
-      <a class="navbar-brand" href="index.html">Site Title</a>
+    <nav id="bootstrap-menu" class="navbar navbar-expand-lg navbar-dark navbar-default navbar-fixed-top">
+      <!-- <a class="navbar-brand" href="index.html"><i class="fas fa-chess-knight mr-1"></i>CHESSFEN</a> -->
+      <a class="navbar-brand" href="index.html"><i class="fas fa-chess mr-1"></i>CHESSFEN</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false"
-        aria-label="Toggle navigation">
+        aria-label="Toggle navigation" data-target="#myNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarsExample03">
-        <ul class="navbar-nav mr-auto">
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav ml-auto">
           <li class="nav-item active">
             <a class="nav-link" href="#">Board</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Products</a>
+            <a class="nav-link" href="#">Instructions</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">About Us</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contact Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Login/Signup</a>
           </li>
 
           <!-- <li class="nav-item dropdown">
@@ -77,9 +81,9 @@
               </div>
             </li> -->
         </ul>
-        <form class="form-inline my-2 my-md-0">
+        <!-- <form class="form-inline my-2 my-md-0">
           <input class="form-control" type="text" placeholder="Search">
-        </form>
+        </form> -->
       </div>
     </nav>
   </div>
@@ -88,46 +92,68 @@
   <!-- Chess Board and Buttons -->
   <div class="container">
 
-    <!-- The Chess Board -->
-    <div class="row">
-      <div class="col col-lg-8" id="myBoard" style="width: 100%"></div>
+    <!-- Board and Buttons -->
+    <div class="row mb-3">
+      <div class="col col-md-8 boardSetup">
+        <!-- The Chess Board -->
+        <div id="myBoard" style="width: 100%"></div>
 
-      <!-- Info Boxes -->
-      <div class="col col-lg-4">
-        <div class="mb-1">
-          <button id="loadPgnBtn">Load PGN</button>
-          <button id="loadFENBtn">Load FEN</button>
+        <!-- PlayThrough Buttons -->
+        <div class="text-center">
+          <span type="button" class="btn btn-default" id="startPositionBtn"><i class="fas fa-fast-backward"></i></span>
+          <span type="button" class="btn btn-default" id="prevBtn"><i class="fas fa-backward"></i></span>
+          <span type="button" class="btn btn-default" id="nextBtn"><i class="fas fa-forward"></i></span>
+          <span type="button" class="btn btn-default" id="endPositionBtn"><i class="fas fa-fast-forward"></i></span>
         </div>
-        <div>
-          <button id="ruyLopezBtn">Ruy Lopez</button>
-          <button id="italianGameBtn">Italian</button>
-          <!-- <button id="startPositionBtn">Start Position</button> -->
-          <button id="flipBoardBtn">Flip Board</button>
-          <button id="moveHistoryBtn">Move History</button>
-          <button id="newGameBtn">New Game</button>
-        </div>
-        <label>Status:</label>
-        <div id="status"></div>
-        <label>FEN:</label>
-        <div id="fen"></div>
-        <div class="card">
+      </div>
+
+      <!-- <div class="col col-md-1"></div> -->
+
+      <!-- Moves History -->
+      <div class="col col-md-4 movesHistory">
+        <div class="card" id="movesCard">
           <div class="card-body">
-            <h5 class="card-title">PGN:</h5>
+            <h5 class="card-title">Moves History:</h5>
             <div id="pgn"></div>
           </div>
         </div>
+
+        <div class="row">
+          <div class="col-6 mx-auto text-nowrap"><button id="loadPgnBtn">Load PGN</button></div>
+          <div class="col-6 mx-auto text-nowrap"><button id="loadFENBtn">Load FEN</button></div>
+        </div>
+
+        <!-- <label id>Status:</label> -->
+        <!-- <div id="status"></div> -->
+        <!-- <label>FEN:</label> -->
+        <!-- <div id="fen"></div> -->
       </div>
     </div>
 
-    <!-- PlayThrough Buttons -->
+
     <div class="row text-center">
-      <div class="col col-lg-8">
-        <span type="button" class="btn btn-default" id="startPositionBtn"><i class="fas fa-fast-backward"></i></span>
-        <span type="button" class="btn btn-default" id="prevBtn"><i class="fas fa-backward"></i></span>
-        <span type="button" class="btn btn-default" id="nextBtn"><i class="fas fa-forward"></i></span>
-        <span type="button" class="btn btn-default" id="endPositionBtn"><i class="fas fa-fast-forward"></i></span>
+      <!--TEST BUTTONS -->
+       <div class="col col-md-8 actionButtons">
+        <button id="ruyLopezBtn">Ruy Lopez</button>
+        <button id="italianGameBtn">Italian</button>
+      <!-- <button id="startPositionBtn">Start Position</button> -->
+       <button id="flipBoardBtn">Flip Board</button>
+        <button id="moveHistoryBtn">Move History</button>
+        <button id="newGameBtn">New Game</button>
+        <button id="setupBoardBtn">Setup Board</button>
       </div>
+
+      <div class="col col-md-4 shareGame">
+        <a href=""><i class="fab fa-facebook"></i></a>
+        <a href=""><i class="fab fa-twitter"></i></a>
+        <a href=""><i class="fab fa-linkedin-in"></i></a>
+        <a href=""><i class="fab fa-instagram"></i></a>
+      </div>
+
     </div>
+
+
+
   </div>
 
 
@@ -142,7 +168,7 @@
 
   <!-- Chess -->
   <script src="node_modules\@chrisoakman\chessboardjs\dist\chessboard-1.0.0.min.js"></script>
-  <script src=""></script>
+  <!-- <script src=""></script> -->
 
   <script src="node_modules\chess.js\chess.js"></script>
   <!-- <script src="js/rules.js" type="text/javascript"></script> -->

@@ -6,6 +6,9 @@ body {
     background: linear-gradient(to top, rgb(41, 41, 41) 0%, rgba(17, 17, 17, 1) 100%);
     color: #b3b1b1;
     font-family: 'Font Awesome 5 Free';
+    --border-spacing: 10px;
+    --dark-color: #86A666;
+    --light-color: #FFFFDD;
 }
 
 #movesCard {
@@ -21,6 +24,7 @@ body {
 .movesHistory {
     border: solid rgba(200, 200, 200, .5) 3px;
     border-radius: 5px;
+    /* bottom: var(--border-spacing); */
 }
 
 .boardSetup {
@@ -28,6 +32,10 @@ body {
     border-radius: 5px;
     padding-top: 10px;
     padding-bottom: 5px;
+    border-spacing: 2px 2px;
+    /* position: relative; */
+    /* right: var(--border-spacing);
+    bottom: var(--border-spacing); */
 }
 
 .actionButtons {
@@ -35,13 +43,18 @@ body {
     border-radius: 5px;
     padding-top: 10px;
     padding-bottom: 5px;
+    /* right: var(--border-spacing); */
 }
 
 .shareGame {
     border: solid rgba(200, 200, 200, .5) 3px;
     border-radius: 5px;
-    padding-top: 10px;
-    padding-bottom: 5px;
+    /* padding-top: 10px; */
+    /* padding-bottom: 5px; */
+}
+
+.shareGame a i{
+    margin-top:20px;
 }
 
 .fa-facebook, .fa-twitter, .fa-linkedin-in, .fa-instagram {
@@ -50,6 +63,19 @@ body {
     margin: 0 4px 0 4px;
 }
 
+.white-1e1d7 {
+    background-color: var(--light-color) !important;
+    color: var(--dark-color) !important;
+}
+
+.black-3c85d {
+    background-color: var(--dark-color) !important;
+    color: var(--light-color) !important;
+}
+
+.piece-417db {
+    z-index: 4000!important;
+  }
 
 /* .row {
     border: green solid 5px;
@@ -67,23 +93,7 @@ body {
     border: pink solid 3px;
 } */
 
-/* #myBoard div:nth-of-type(4){
-    background-color:white;
-
-}
-
-
-.white-1e1d7 {
-    background-color: #FFFFDD !important;
-    color: #86A666 !important;
-}
-
-.black-3c85d {
-    background-color: #86A666 !important;
-    color: #FFFFDD !important;
-}
-/* 
-.white-1e1d7 {
+/* .white-1e1d7 {
     background-color: #f0d9b5;
     color: #b58863;
 }
@@ -91,6 +101,11 @@ body {
 .black-3c85d {
     background-color: #b58863;
     color: #f0d9b5;
+} */
+
+/* #myBoard div:nth-of-type(4){
+    background-color:white;
+
 } */
 
 /*************************** bootstrapmenu ***********************************************************/

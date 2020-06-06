@@ -16,7 +16,7 @@ function onDragStart(source, piece, position, orientation) {
 
 	// only pick up pieces for the side to move
 	if ((game.turn() === "w" && piece.search(/^b/) !== -1) ||
-    (game.turn() === "b" && piece.search(/^w/) !== -1)) {
+		(game.turn() === "b" && piece.search(/^w/) !== -1)) {
 		return false;
 	}
 }
@@ -222,8 +222,7 @@ $("#newGameBtn").on("click", function () {
 $("#playBtn").on("click", async function () {
 	stop = !stop;
 	for (var i = index; i < fens.length; ++i) {
-		if(!stop)
-		{
+		if (!stop) {
 			board.position(fens[i]);
 			await sleep(1000);
 		}
@@ -240,8 +239,35 @@ function sleep(ms) {
 //add status as the moves are clicked, currently status stays stuck at checkmate
 //this is because the game position in chess.js isnt updated, only the board.position in chessboard.js is
 
-//#TODO
+
 //add a board setup feature
+$("#setupBoardBtn").click(function () {
+	$("#setupModal").modal("toggle");
+	let fen = board.fen();
+	setupBoard.position(fen);
+});
+
+let setupBoard = Chessboard("setupBoard", {
+	draggable: true,
+	dropOffBoard: "trash",
+	sparePieces: true
+});
+
+$("#startBtn").on("click", setupBoard.start);
+$("#clearBtn").on("click", setupBoard.clear);
+$("#cancelSetupBtn").on("click", setupBoard.clear);
+
+$("#saveChangesBtn").click(function () {
+	let fen = setupBoard.fen();
+	board.position(fen);
+	$("#setupModal").modal("toggle");
+
+	game.reset();
+	game = new Chess(fen + " b KQkq - 3 3"); //FIX THE CONCAT ON THIS TO BE RADIO SETTINGS LATER
+	updateFen();
+
+});
+
 
 //#TODO
 //figure out how to make notation outside of the board or make a custom board rim with notation

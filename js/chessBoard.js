@@ -93,6 +93,10 @@ var config = {
 board = Chessboard("myBoard", config);
 $(window).resize(board.resize);
 
+jQuery("#myBoard").on("scroll touchmove touchend touchstart contextmenu", function (e) {
+	e.preventDefault();
+});
+
 //example of how to setup a position(ruy lopez)
 $("#ruyLopezBtn").on("click", function () {
 	game.reset();
@@ -113,7 +117,15 @@ $("#italianGameBtn").on("click", function () {
 
 //flip board
 $("#flipBoardBtn").on("click", function () {
-	board.flip();
+	if($("#myBoard").is(":visible")){
+		board.flip();
+	}
+	else{
+		setupBoard.flip();
+	}
+	
+	// if (board.orientation() == "white")
+	// 	console.log("white");
 });
 
 //Move History
@@ -151,7 +163,7 @@ const pgn = [
 
 var index = 0;
 var fens = [];
-var stop = true;
+// var stop = true;
 
 //loadPGN
 $("#loadPgnBtn").on("click", function () {
@@ -219,21 +231,21 @@ $("#newGameBtn").on("click", function () {
 });
 
 // If Play button clicked, animate moves from current position until end
-$("#playBtn").on("click", async function () {
-	stop = !stop;
-	for (var i = index; i < fens.length; ++i) {
-		if (!stop) {
-			board.position(fens[i]);
-			await sleep(1000);
-		}
-	}
-	game.load(fens[1]);
-	console.log(game.fen());
-});
+// $("#playBtn").on("click", async function () {
+// 	stop = !stop;
+// 	for (var i = index; i < fens.length; ++i) {
+// 		if (!stop) {
+// 			board.position(fens[i]);
+// 			await sleep(1000);
+// 		}
+// 	}
+// 	game.load(fens[1]);
+// 	console.log(game.fen());
+// });
 
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
+// function sleep(ms) {
+// 	return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
 //#TODO
 //add status as the moves are clicked, currently status stays stuck at checkmate
@@ -241,29 +253,61 @@ function sleep(ms) {
 
 
 //add a board setup feature
+var setupBoardFlag = false;
+var fen;
+var setupBoard;
 $("#setupBoardBtn").click(function () {
-	$("#setupModal").modal("toggle");
-	let fen = board.fen();
-	setupBoard.position(fen);
+	// $("#setupModal").modal("toggle");
+
+	if (!setupBoardFlag) {
+		$("#myBoard").hide();
+		$("#playthroughButtons").hide();
+		$("#whosTurn").show();
+		setupBoard = Chessboard("myBoard2", {
+			draggable: true,
+			dropOffBoard: "trash",
+			sparePieces: true
+		});
+
+		fen = board.fen();
+		setupBoard.position(fen);
+	}
+	else {
+		$("#myBoard").show();
+		$("#playthroughButtons").show();
+		$("#whosTurn").hide();
+		fen = setupBoard.fen();
+		board.position(fen);
+		game.reset();
+		game = new Chess(fen + " " + whosTurn() + " " + "KQkq - 0 1"); //FIX THE CONCAT ON THIS TO BE RADIO SETTINGS LATER
+		updateFen();
+		setupBoard.destroy();
+	}
+	setupBoardFlag = !setupBoardFlag;
 });
 
-let setupBoard = Chessboard("setupBoard", {
-	draggable: true,
-	dropOffBoard: "trash",
-	sparePieces: true
-});
+//^^^^^Add white or blacks turn radio buttons and stuff***************^^^^^^^
+function whosTurn() {
+	if ($("#whiteTurn").is(":checked")) {
+		return "w";
+	}
+	else if ($("#blackTurn").is(":checked")) {
+		return "b";
+	}
+}
 
-$("#startBtn").on("click", setupBoard.start);
-$("#clearBtn").on("click", setupBoard.clear);
-$("#cancelSetupBtn").on("click", setupBoard.clear);
+
+// $("#startBtn").on("click", setupBoard.start);
+// $("#clearBtn").on("click", setupBoard.clear);
+// $("#cancelSetupBtn").on("click", setupBoard.clear);
 
 $("#saveChangesBtn").click(function () {
-	let fen = setupBoard.fen();
+	var fen = setupBoard.fen();
 	board.position(fen);
 	$("#setupModal").modal("toggle");
 
 	game.reset();
-	game = new Chess(fen + " b KQkq - 3 3"); //FIX THE CONCAT ON THIS TO BE RADIO SETTINGS LATER
+	game = new Chess(fen + " " + whosTurn() + " " + "KQkq - 0 1"); //FIX THE CONCAT ON THIS TO BE RADIO SETTINGS LATER
 	updateFen();
 
 });
@@ -286,3 +330,50 @@ $("#saveChangesBtn").click(function () {
 
 
 updateStatus();
+
+//center bottom row vertically
+$(document).ready(function () {
+
+	$("#whosTurn").hide();
+
+	function viewSize() {
+		return $("#sizer").find("div:visible").data("size");
+		// console.log($("#sizer").find("div:visible").data("size"));
+	}
+
+	//set Boarders
+	function setBoarders() {
+		var borderGutter = 10;
+		if (viewSize() == "sm" || viewSize() == "xs") {
+			// $(".boardSetup").css("width", 800);
+			// $("#myBoard").css("height", 800);
+			// $("#myBoard").css("width", 800);
+			$(".boardSetup").css("right", 0);
+			$(".actionButtons").css("right", 0);
+			$(".actionButtons").css("top", borderGutter + borderGutter);
+			$(".shareGame").css("top", borderGutter * 3);
+			$(".movesHistory").css("top", borderGutter);
+		}
+		else {
+			$(".movesHistory").css("top", 0);
+			$(".boardSetup").css("right", borderGutter);
+			$(".actionButtons").css("right", borderGutter);
+			$(".actionButtons").css("top", borderGutter);
+			$(".shareGame").css("top", borderGutter);
+		}
+	}
+
+	setBoarders();
+
+	$(window).resize(function () {
+		setBoarders();
+	});
+
+	//center action buttons vertically
+	$(".actionButtons").css("padding-top", $(".actionButtons").height() / 2 - $("#setupBoardBtn").height());
+
+	//center share section vertically
+	$(".shareGame").css("padding-top", $(".shareGame").height() / 2 - $("#shareGameText").height() - $("#shareGameButtons").height());
+
+
+});

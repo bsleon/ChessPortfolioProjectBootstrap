@@ -5,13 +5,28 @@
   "main": "index.js",
   "scripts": {
     "lite": "lite-server",
-    "start": "npm run lite",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "scss": "node-sass -o css/ css/",
+    "start": "npm run watch:all",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:scss": "onchange \"css/*.scss\" -- npm run scss",
+    "watch:all": "parallelshell \"npm run watch:scss\" \"npm run lite\"",
+    "copyfonts": "copyfiles -f node_modules/@fortawesome/fontawesome-free/webfonts/* dist/webfonts",
+    "imagemin": "imagemin img/chesspieces/wikipedia/* -o dist/img/chesspieces/wikipedia",
+    "usemin": "usemin index.html -d dist --htmlmin -o dist/index.html",
+    "clean": "rimraf dist",
+    "build": "npm run clean && npm run imagemin && npm run copyfonts && npm run usemin"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "lite-server": "^2.3.0"
+    "copyfiles": "^2.0.0",
+    "imagemin-cli": "^3.0.0",
+    "lite-server": "^2.3.0",
+    "node-sass": "^4.12.0",
+    "onchange": "^3.3.0",
+    "parallelshell": "^3.0.1",
+    "rimraf": "^2.6.2",
+    "usemin-cli": "^0.5.1"
   },
   "dependencies": {
     "@chrisoakman/chessboardjs": "^1.0.0",

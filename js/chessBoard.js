@@ -95,43 +95,34 @@ $(window).resize(board.resize);
 
 jQuery("#myBoard").on("scroll touchmove touchend touchstart contextmenu", function (e) {
 	e.preventDefault();
+	// console.log("TESTING");
 });
-
-//example of how to setup a position(ruy lopez)
-$("#ruyLopezBtn").on("click", function () {
-	game.reset();
-	var ruyLopez = "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R"; //use min FEN
-	board.position(ruyLopez); //set the board gui to FEN
-	game = new Chess(ruyLopez + " b KQkq - 3 3"); //set the chess.js to full FEN with turn
-	updateFen();
-});
-
-//italian game
-$("#italianGameBtn").on("click", function () {
-	game.reset();
-	var italianGame = "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R"; //use min FEN
-	board.position(italianGame); //set the board gui to FEN
-	game = new Chess(italianGame + " b KQkq - 3 3"); //set the chess.js to full FEN with turn
-	updateFen();
-});
+// jQuery(".square-55d63").children("img")[1].on("click drag scroll touchmove touchend touchstart contextmenu", function (e) {
+// 	console.log("TESTING");
+// 	e.preventDefault();
+// });
+// jQuery(".piece-417db").on("click drag scroll touchmove touchend touchstart contextmenu", function (e) {
+// 	e.preventDefault();
+// 	console.log("TESTING");
+// });
 
 //flip board
 $("#flipBoardBtn").on("click", function () {
-	if($("#myBoard").is(":visible")){
+	if ($("#myBoard").is(":visible")) {
 		board.flip();
 	}
-	else{
+	else {
 		setupBoard.flip();
 	}
-	
+
 	// if (board.orientation() == "white")
 	// 	console.log("white");
 });
 
 //Move History
-$("#moveHistoryBtn").on("click", function () {
-	alert(game.history());
-});
+// $("#moveHistoryBtn").on("click", function () {
+// 	alert(game.history());
+// });
 
 //update fen and status
 function updateFen() {
@@ -228,6 +219,8 @@ $("#newGameBtn").on("click", function () {
 	game.reset();
 	board.position("start");
 	updateStatus();
+	$("#openingsList").prop("selectedIndex", 0);
+	$("#openingsList").selectpicker("refresh");
 });
 
 // If Play button clicked, animate moves from current position until end
@@ -256,10 +249,12 @@ $("#newGameBtn").on("click", function () {
 var setupBoardFlag = false;
 var fen;
 var setupBoard;
-$("#setupBoardBtn").click(function () {
+const setupBoardButton = $("#setupBoardBtn");
+setupBoardButton.click(function () {
 	// $("#setupModal").modal("toggle");
 
 	if (!setupBoardFlag) {
+		setupBoardButton.html("Continue Here");
 		$("#myBoard").hide();
 		$("#playthroughButtons").hide();
 		$("#whosTurn").show();
@@ -269,10 +264,15 @@ $("#setupBoardBtn").click(function () {
 			sparePieces: true
 		});
 
+		jQuery("#myBoard2").on("scroll touchmove touchend touchstart contextmenu", function (e) {
+			e.preventDefault();
+		});
+
 		fen = board.fen();
 		setupBoard.position(fen);
 	}
 	else {
+		setupBoardButton.html("Setup Board");
 		$("#myBoard").show();
 		$("#playthroughButtons").show();
 		$("#whosTurn").hide();
@@ -287,6 +287,7 @@ $("#setupBoardBtn").click(function () {
 });
 
 //^^^^^Add white or blacks turn radio buttons and stuff***************^^^^^^^
+//TODO CHANGE THIS TO A DROPDOWN MAYBE???
 function whosTurn() {
 	if ($("#whiteTurn").is(":checked")) {
 		return "w";
@@ -295,6 +296,20 @@ function whosTurn() {
 		return "b";
 	}
 }
+
+//TODO
+//CHECK FOR ILLEGAL POSITIONS BEFORE ALLOWING SETUP BOARD
+//SIDE TO MOVE CHECKMATED OPPONENT ALREADY
+//SIDE TO MOVE IS IN CHECK
+//MORE THAN ONE KING ON THE BOARD FOR A COLOR
+//NO KING(S) ON THE BOARD
+//1 KING ON THE BOARD
+//SIDE TO MOVE IS IN STALEMATE
+
+
+// TODO
+//^^^^^Add clear board and starting position buttons***************^^^^^^^
+//ADD goback and submit buttons especially for mobile since screen doesnt scroll easily in setup mode now
 
 
 // $("#startBtn").on("click", setupBoard.start);
@@ -348,6 +363,19 @@ $(document).ready(function () {
 			// $(".boardSetup").css("width", 800);
 			// $("#myBoard").css("height", 800);
 			// $("#myBoard").css("width", 800);
+			// $(".board-b72b1").css("width", "100%");
+			// $(".chessboard-63f37").css("width", "100%");
+			// $(window).resize("0");
+			// $(window).resize(board.resize);
+			// $(window).resizeTo(window.outerWidth, window.outerHeight + 1);
+			// $(window).resizeTo(window.outerWidth, window.outerHeight - 1);
+
+			// $(".boardSetup").css("border", 0);
+			// $(".boardSetup").css("padding", 0);
+			// $(".boardSetup").css("margin", 0);
+			// $(".boardSetup").css("margin", 0);
+			// $(".boardSetup").removeClass("p-3");
+			// $(".boardSetup").addClass("p-0");
 			$(".boardSetup").css("right", 0);
 			$(".actionButtons").css("right", 0);
 			$(".actionButtons").css("top", borderGutter + borderGutter);
@@ -355,6 +383,16 @@ $(document).ready(function () {
 			$(".movesHistory").css("top", borderGutter);
 		}
 		else {
+
+			// $(".boardSetup").css("border", "solid rgba(200, 200, 200, .5) 3px");
+			// $(".boardSetup").css("cssText", "padding-left: 15px !important;");
+			// $(".boardSetup").css("cssText", "padding-right: 15px !important;");
+			// $(".boardSetup").css("cssText", "padding: 15px 15px 15px 15px !important;");
+			// $(".boardSetup").css("cssText", "padding-right: 15px !important;");
+			// $(".boardSetup").css("padding-right", 15);
+			// $(".boardSetup").css("padding-top", 15);
+			// $(".boardSetup").removeClass("p-0");
+			// $(".boardSetup").addClass("p-3");
 			$(".movesHistory").css("top", 0);
 			$(".boardSetup").css("right", borderGutter);
 			$(".actionButtons").css("right", borderGutter);
@@ -370,10 +408,75 @@ $(document).ready(function () {
 	});
 
 	//center action buttons vertically
-	$(".actionButtons").css("padding-top", $(".actionButtons").height() / 2 - $("#setupBoardBtn").height());
+	// $(".actionButtons").css("padding-top", $(".actionButtons").height() / 2 - $("#setupBoardBtn").height());
 
 	//center share section vertically
-	$(".shareGame").css("padding-top", $(".shareGame").height() / 2 - $("#shareGameText").height() - $("#shareGameButtons").height());
+	// $(".shareGame").css("padding-top", $(".shareGame").height() / 2 - $("#shareGameText").height() - $("#shareGameButtons").height());
+
+
+	//OPENINGS DROPDOWN
+	let openingsDropdown = $("#openingsList");
+	openingsDropdown.empty();
+	openingsDropdown.append("<option selected=\"true\" disabled>Choose Opening to Load</option>");
+	openingsDropdown.prop("selectedIndex", 0);
+
+	const url = "json/openings.json";
+
+	// Populate dropdown with list of provinces
+	$.getJSON(url, function (data) {
+		$.each(data, function (key, entry) {
+			openingsDropdown.append($("<option></option>").attr("value", entry.fen).text(entry.name));
+		});
+		$(".selectpicker").selectpicker("refresh");
+	});
+
+	openingsDropdown.change(function () {
+		console.log(openingsDropdown.val());
+		game.reset();
+		var fen = openingsDropdown.val();
+		board.position(fen);
+		game = new Chess(fen + " 0 1"); //FIX THE CONCAT ON THIS TO BE RADIO SETTINGS LATER
+		updateFen();
+	});
+	//END OPENINGS DROPDOWN
+
+	//SEARCH OPENINGS DROPDOWN
+	// function searchOpeningsDropdown() {
+	// 	filter = $("#openingsInput").val().toUpperCase();
+	// 	openingsList = $("#openingsList");
+	// 	openingsList.children().each(function(){
+	// 		let openingsTxt = this.text;
+	// 		if(openingsTxt.toUpperCase().indexOf(filter) === -1){
+	// 			console.log(this.text);
+	// 			this.remove();
+	// 		}
+	// 	});
+	// }
+
+	// $("#searchOpeningsBtn").click(function(){
+	// 	searchOpeningsDropdown();
+	// });
+	//END SEARCH OPENINGS DROPDOWN
+
+	//ruy lopez
+	// $("#ruyLopezBtn").on("click", function () {
+	// 	game.reset();
+	// 	var ruyLopez = "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R"; //use min FEN
+	// 	board.position(ruyLopez); //set the board gui to FEN
+	// 	game = new Chess(ruyLopez + " b KQkq - 3 3"); //set the chess.js to full FEN with turn
+	// 	updateFen();
+	// });
+
+	// //italian game
+	// $("#italianGameBtn").on("click", function () {
+	// 	game.reset();
+	// 	var italianGame = "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R"; //use min FEN
+	// 	board.position(italianGame); //set the board gui to FEN
+	// 	game = new Chess(italianGame + " b KQkq - 3 3"); //set the chess.js to full FEN with turn
+	// 	updateFen();
+	// });
+
+
 
 
 });

@@ -139,8 +139,8 @@
         <div class="row">
           <div class="col-6 mx-auto text-nowrap"><button id="loadPgnBtn">Load PGN</button></div>
           <div class="col-6 mx-auto text-nowrap"><button id="loadFENBtn">Load FEN</button></div>
-          <div class="col-6 mx-auto text-nowrap"><button id="searchOpeningsBtn">Search List</button></div>
-          <input type="text" id="openingsInput">
+          <!-- <div class="col-6 mx-auto text-nowrap"><button id="searchOpeningsBtn">Search List</button></div>
+          <input type="text" id="openingsInput"> -->
         </div>
 
         <div id="whosTurn" class="row">
@@ -167,15 +167,20 @@
 
 
     <div class="row text-center bottomRow">
-        <div class="col-12 col-md-8 actionButtons">
-          <div class="row">
+      <div class="col-12 col-md-8 actionButtons">
+        <div class="row">
           <!-- OPENINGS DROPDOWN -->
-          <div class="col-6 pt-2 dropdown bootstrap-select fit-width">
+          <div class="col-6">
+          <form>
+            <div class="form-group dropdown bootstrap-select fit-width">
               <label for="openingsList">Openings List:</label>
-              <select class="selectpicker" id="openingsList" data-live-search="true" data-dropup-auto="false">
+              <select class="selectpicker from-control" id="openingsList" data-live-search="true"
+                data-dropup-auto="false">
                 <option value="">Select an opening...</option>
               </select>
-          </div>
+            </div>
+          </form>
+        </div>
           <!-- END OPENINGS DROPDOWN -->
 
           <!--TEST BUTTONS -->

@@ -36,6 +36,7 @@
     "chess.js": "^0.10.3",
     "fontawesome": "^5.6.3",
     "jquery": "^3.3.1",
+    "mdbootstrap": "^4.19.0",
     "popper.js": "^1.12.9",
     "stockfish": "^10.0.2"
   }

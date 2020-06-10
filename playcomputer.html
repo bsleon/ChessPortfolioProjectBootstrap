@@ -25,7 +25,7 @@
             <a class="navbar-brand" href="index.html"><i class="fas fa-chess ml-0"></i>CHESSFEN</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false"
                 aria-label="Toggle navigation" data-target="#myNavbar">
-                <span class="navbar-toggler-icon"></span>
+                <div class="animated-icon"><span></span><span></span><span></span><span></span></div>
             </button>
 
             <div class="collapse navbar-collapse" id="myNavbar">
@@ -161,11 +161,11 @@
                         <div class="form-group col-6">
                             <label for="color" class="control-label"></label>
                             <div class="">
-                                <button type="button" class="btn btn-primary mt-0" onclick="newGame()">New Game</button>
+                                <button type="button" class="btn btn-dark" onclick="newGame()">New Game</button>
                             </div>
                         </div>
 
-                        <div class="form-group col-6"> 
+                        <div class="form-group col-6">
                             <div class="">
                                 <label for="color" class="control-label mb-0 pb-0">Promote To:</label>
                                 <select id="promote" class="ml-2 mt-0">
@@ -180,7 +180,9 @@
 
                     <!-- MOVES HISTORY -->
                     <div class="row">
-                        <div class="col-12"><h3>Moves:</h3></div>
+                        <div class="col-12">
+                            <h3>Moves:</h3>
+                        </div>
                         <div class="col-12" id="pgn"></div>
                     </div>
                     <!-- END MOVES HISTORY -->
@@ -242,6 +244,18 @@
             }
         </script>
     </div>
+
+    <script>
+        $(document).ready(function () {
+
+            $('.navbar-toggler').on('click', function () {
+
+                $('.animated-icon').toggleClass('open');
+            });
+
+        });
+    </script>
+
 </body>
 
 </html>

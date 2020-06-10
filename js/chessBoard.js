@@ -255,6 +255,8 @@ setupBoardButton.click(function () {
 
 	if (!setupBoardFlag) {
 		setupBoardButton.html("Continue Here");
+		$("#openingsList").attr("disabled", "");
+		$(".selectpicker").selectpicker("refresh");
 		$("#myBoard").hide();
 		$("#playthroughButtons").hide();
 		$("#whosTurn").show();
@@ -263,6 +265,7 @@ setupBoardButton.click(function () {
 			dropOffBoard: "trash",
 			sparePieces: true
 		});
+		$(window).resize(setupBoard.resize);
 
 		jQuery("#myBoard2").on("scroll touchmove touchend touchstart contextmenu", function (e) {
 			e.preventDefault();
@@ -273,6 +276,8 @@ setupBoardButton.click(function () {
 	}
 	else {
 		setupBoardButton.html("Setup Board");
+		$("#openingsList").removeAttr("disabled");
+		$(".selectpicker").selectpicker("refresh");
 		$("#myBoard").show();
 		$("#playthroughButtons").show();
 		$("#whosTurn").hide();
@@ -417,7 +422,7 @@ $(document).ready(function () {
 	//OPENINGS DROPDOWN
 	let openingsDropdown = $("#openingsList");
 	openingsDropdown.empty();
-	openingsDropdown.append("<option selected=\"true\" disabled>Choose Opening to Load</option>");
+	openingsDropdown.append("<option selected=\"true\" disabled>Choose an Opening to Load:</option>");
 	openingsDropdown.prop("selectedIndex", 0);
 
 	const url = "json/openings.json";
@@ -431,7 +436,7 @@ $(document).ready(function () {
 	});
 
 	openingsDropdown.change(function () {
-		console.log(openingsDropdown.val());
+		// console.log(openingsDropdown.val());
 		game.reset();
 		var fen = openingsDropdown.val();
 		board.position(fen);

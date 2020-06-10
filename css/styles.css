@@ -11,10 +11,8 @@ body {
   --light-color: #ffffdd; }
 
 #movesCard {
-  max-height: 600px;
   /* overflow: hidden; */
   width: 100%;
-  height: calc(100% - 50px);
   overflow-y: auto;
   /* font-size: 30px; */
   background-color: rgba(0, 0, 0, 0); }
@@ -47,7 +45,7 @@ pre {
 .fa-twitter,
 .fa-linkedin-in,
 .fa-instagram {
-  color: white;
+  color: #b3b1b1;
   font-size: 30px;
   margin: 0 4px 0 4px; }
 

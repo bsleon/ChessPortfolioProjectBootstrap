@@ -418,6 +418,11 @@ $(document).ready(function () {
 	//center share section vertically
 	// $(".shareGame").css("padding-top", $(".shareGame").height() / 2 - $("#shareGameText").height() - $("#shareGameButtons").height());
 
+	const boardContainerHeight = $("#myBoard").height();
+	// const playThroughButtonsHeight = $("#playThroughButtons").height();
+	const loadButtonsHeight = $("#loadButtons").height();
+	$("#movesCard").css("height", boardContainerHeight - loadButtonsHeight);
+	
 
 	//OPENINGS DROPDOWN
 	let openingsDropdown = $("#openingsList");

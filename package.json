@@ -12,7 +12,7 @@
     "watch:all": "parallelshell \"npm run watch:scss\" \"npm run lite\"",
     "copyfonts": "copyfiles -f node_modules/@fortawesome/fontawesome-free/webfonts/* dist/webfonts",
     "imagemin": "imagemin img/chesspieces/wikipedia/* -o dist/img/chesspieces/wikipedia",
-    "usemin": "usemin index.html -d dist --htmlmin -o dist/index.html",
+    "usemin": "usemin index.html -d dist --htmlmin -o dist/index.html && usemin playcomputer.html -d dist --htmlmin -o dist/playcomputer.html && usemin contactus.html -d dist --htmlmin -o dist/contactus.html",
     "clean": "rimraf dist",
     "build": "npm run clean && npm run imagemin && npm run copyfonts && npm run usemin"
   },

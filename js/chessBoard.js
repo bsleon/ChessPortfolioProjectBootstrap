@@ -227,6 +227,7 @@ $("#newGameBtn").on("click", function () {
 $("#undoMoveBtn").on("click", function () {
 	game.undo();
 	board.position(game.fen());
+	fens = [];
 	updateStatus();
 });
 
@@ -512,7 +513,7 @@ $(document).ready(function () {
 
 
 	//OPENINGS DROPDOWN
-	let openingsDropdown = $("#openingsList");
+	var openingsDropdown = $("#openingsList");
 	openingsDropdown.empty();
 	openingsDropdown.append("<option selected=\"true\" disabled>Choose an Opening to Load:</option>");
 	openingsDropdown.prop("selectedIndex", 0);

@@ -2,17 +2,21 @@
 <html>
 
 <head>
+    <!-- build:css css/main.css -->
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="node_modules/@chrisoakman/chessboardjs/dist/chessboard-1.0.0.min.css">
 
     <!-- Additional CSS must be placed after Bootstrap CSS -->
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <!-- endbuild -->
 
+    <!-- build:js js/main.js -->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="node_modules\chess.js\chess.js"></script>
     <script src="node_modules\@chrisoakman\chessboardjs\dist\chessboard-1.0.0.min.js"></script>
+    <!-- endbuild -->
 
     <title>CHESSFEN</title>
 </head>
@@ -202,7 +206,9 @@
                 <pre id="evaluation"></pre> -->
             </div>
         </div>
+        <!-- build:js js/main.js -->
         <script src="js/enginegame.js"></script>
+        <!-- endbuild -->
         <script>
             var wait_for_script;
             var newGame = function () { };

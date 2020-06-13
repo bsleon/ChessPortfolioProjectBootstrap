@@ -39,7 +39,7 @@ body {
     bottom: var(--border-spacing); */
 }
 
-pre{
+pre {
     color: white;
 }
 
@@ -53,9 +53,24 @@ pre{
     border-radius: var(--border-radius);
 }
 
+.fa-flipboard,
+.fa-edit,
+.fa-chess-board,
+.fa-undo-alt,
+.fa-chess-knight,
+.fa-chess-king,
+.fa-trash-alt,
+.fa-arrows-alt-v {
+    font-size: 30px;
+}
+
 .shareGame {
     border: solid rgba(200, 200, 200, 0.5) 1px;
     border-radius: var(--border-radius);
+}
+
+.disabled {
+    color: rgba(200, 200, 200, 0.3);
 }
 
 // .shareGame a i {
@@ -95,7 +110,7 @@ pre{
     top: -20px;
 }
 
-#myBoard{
+#myBoard {
     padding-left: 1px;
 }
 
@@ -137,7 +152,8 @@ pre{
     color: white;
 }
 
-form label, form .indent {
+form label,
+form .indent {
     padding: 8px 0;
     margin: 5px 0 5px 10px;
     display: block;
@@ -150,19 +166,19 @@ form label, form .indent {
     border-radius: var(--border-radius);
 }
 
-.sendComments{
+.sendComments {
     padding-left: 10;
 }
 
-.nameEmailInput{
+.nameEmailInput {
     padding-left: 10;
 }
 
 .fade.show {
-    opacity: .7;
+    opacity: 0.7;
 }
 
-button{
+button {
     font-size: 14px;
 }
 
@@ -202,6 +218,8 @@ button{
 #bootstrap-menu.navbar-default .navbar-brand {
     color: rgb(200, 200, 200);
     font-size: 2em;
+    margin-left: 0;
+    padding-left: 0;
 }
 
 #bootstrap-menu.navbar-default {
@@ -262,14 +280,14 @@ button{
     box-shadow: none;
 }
 
-.navbar-toggler{
-    border:none;
+.navbar-toggler {
+    border: none;
 }
 
 /***************************End bootstrapmenu *******************************************************/
 
 /****Animated toggle*****/
-.animated-icon{
+.animated-icon {
     width: 30px;
     height: 20px;
     position: relative;
@@ -278,14 +296,14 @@ button{
     -moz-transform: rotate(0deg);
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
-    -webkit-transition: .5s ease-in-out;
-    -moz-transition: .5s ease-in-out;
-    -o-transition: .5s ease-in-out;
-    transition: .5s ease-in-out;
+    -webkit-transition: 0.5s ease-in-out;
+    -moz-transition: 0.5s ease-in-out;
+    -o-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
     cursor: pointer;
-    }
-    
-    .animated-icon span {
+}
+
+.animated-icon span {
     display: block;
     position: absolute;
     height: 3px;
@@ -297,55 +315,52 @@ button{
     -moz-transform: rotate(0deg);
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
-    -webkit-transition: .25s ease-in-out;
-    -moz-transition: .25s ease-in-out;
-    -o-transition: .25s ease-in-out;
-    transition: .25s ease-in-out;
-    }
-    
-    
-    
-    .animated-icon span {
+    -webkit-transition: 0.25s ease-in-out;
+    -moz-transition: 0.25s ease-in-out;
+    -o-transition: 0.25s ease-in-out;
+    transition: 0.25s ease-in-out;
+}
+
+.animated-icon span {
     background: #e3f2fd;
-    }
-    
-    
-    
-    .animated-icon span:nth-child(1) {
+}
+
+.animated-icon span:nth-child(1) {
     top: 0px;
-    }
-    
-    .animated-icon span:nth-child(2), .animated-icon span:nth-child(3) {
+}
+
+.animated-icon span:nth-child(2),
+.animated-icon span:nth-child(3) {
     top: 10px;
-    }
-    
-    .animated-icon span:nth-child(4) {
+}
+
+.animated-icon span:nth-child(4) {
     top: 20px;
-    }
-    
-    .animated-icon.open span:nth-child(1) {
+}
+
+.animated-icon.open span:nth-child(1) {
     top: 11px;
     width: 0%;
     left: 50%;
-    }
-    
-    .animated-icon.open span:nth-child(2) {
+}
+
+.animated-icon.open span:nth-child(2) {
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
     -o-transform: rotate(45deg);
     transform: rotate(45deg);
-    }
-    
-    .animated-icon.open span:nth-child(3) {
+}
+
+.animated-icon.open span:nth-child(3) {
     -webkit-transform: rotate(-45deg);
     -moz-transform: rotate(-45deg);
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
-    }
-    
-    .animated-icon.open span:nth-child(4) {
+}
+
+.animated-icon.open span:nth-child(4) {
     top: 11px;
     width: 0%;
     left: 50%;
-    }
-    /******end animated toggle ***/
+}
+/******end animated toggle ***/

@@ -34,9 +34,22 @@ pre {
   border: solid rgba(200, 200, 200, 0.5) 1px;
   border-radius: var(--border-radius); }
 
+.fa-flipboard,
+.fa-edit,
+.fa-chess-board,
+.fa-undo-alt,
+.fa-chess-knight,
+.fa-chess-king,
+.fa-trash-alt,
+.fa-arrows-alt-v {
+  font-size: 30px; }
+
 .shareGame {
   border: solid rgba(200, 200, 200, 0.5) 1px;
   border-radius: var(--border-radius); }
+
+.disabled {
+  color: rgba(200, 200, 200, 0.3); }
 
 .fa-google,
 .fa-facebook,
@@ -98,7 +111,8 @@ pre {
 .modal-body {
   color: white; }
 
-form label, form .indent {
+form label,
+form .indent {
   padding: 8px 0;
   margin: 5px 0 5px 10px;
   display: block;
@@ -116,7 +130,7 @@ form label, form .indent {
   padding-left: 10; }
 
 .fade.show {
-  opacity: .7; }
+  opacity: 0.7; }
 
 button {
   font-size: 14px; }
@@ -137,7 +151,9 @@ button {
 /*************************** bootstrapmenu ***********************************************************/
 #bootstrap-menu.navbar-default .navbar-brand {
   color: #c8c8c8;
-  font-size: 2em; }
+  font-size: 2em;
+  margin-left: 0;
+  padding-left: 0; }
 
 #bootstrap-menu.navbar-default {
   font-size: 20px;
@@ -201,10 +217,10 @@ button {
   -moz-transform: rotate(0deg);
   -o-transform: rotate(0deg);
   transform: rotate(0deg);
-  -webkit-transition: .5s ease-in-out;
-  -moz-transition: .5s ease-in-out;
-  -o-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
   cursor: pointer; }
 
 .animated-icon span {
@@ -219,10 +235,10 @@ button {
   -moz-transform: rotate(0deg);
   -o-transform: rotate(0deg);
   transform: rotate(0deg);
-  -webkit-transition: .25s ease-in-out;
-  -moz-transition: .25s ease-in-out;
-  -o-transition: .25s ease-in-out;
-  transition: .25s ease-in-out; }
+  -webkit-transition: 0.25s ease-in-out;
+  -moz-transition: 0.25s ease-in-out;
+  -o-transition: 0.25s ease-in-out;
+  transition: 0.25s ease-in-out; }
 
 .animated-icon span {
   background: #e3f2fd; }
@@ -230,7 +246,8 @@ button {
 .animated-icon span:nth-child(1) {
   top: 0px; }
 
-.animated-icon span:nth-child(2), .animated-icon span:nth-child(3) {
+.animated-icon span:nth-child(2),
+.animated-icon span:nth-child(3) {
   top: 10px; }
 
 .animated-icon span:nth-child(4) {

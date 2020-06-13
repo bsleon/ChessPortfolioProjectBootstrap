@@ -27,7 +27,7 @@
 
 <body>
   <!-- START NAVBAR -->
-  <div class="container">
+  <div class="container pl-0">
     <nav id="bootstrap-menu" class="navbar navbar-expand-lg navbar-dark navbar-default navbar-fixed-top pl-0">
       <!-- <a class="navbar-brand" href="index.html"><i class="fas fa-chess-knight mr-1"></i>CHESSFEN</a> -->
       <a class="navbar-brand" href="index.html"><i class="fas fa-chess ml-0"></i>CHESSFEN</a>
@@ -37,8 +37,8 @@
         <div class="animated-icon"><span></span><span></span><span></span><span></span></div>
       </button>
 
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav ml-auto">
+      <div class="collapse navbar-collapse ml-5" id="myNavbar">
+        <ul class="nav navbar-nav mr-auto">
           <li class="nav-item active">
             <a class="nav-link" href="index.html">Board</a>
           </li>
@@ -54,6 +54,8 @@
           <li class="nav-item">
             <a class="nav-link" href="contactus.html">Contact Us</a>
           </li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link loginBtn" data-toggle="modal" data-target="#loginModal">Login/Signup</a>
           </li>
@@ -125,6 +127,24 @@
           <span type="button" class="btn btn-default" id="nextBtn"><i class="fas fa-forward"></i></span>
           <span type="button" class="btn btn-default" id="endPositionBtn"><i class="fas fa-fast-forward"></i></span>
         </div>
+
+        <!-- Action Buttons -->
+        <div id="actionButtons" class="text-center">
+          <span type="button" class="btn btn-default" id="clearBoardBtn" data-toggle="tooltip" data-placement="top"
+            title="Clear Board" style="display:none"><i class="fas fa-trash-alt"></i></span>
+          <span type="button" class="btn btn-default" id="startBoardBtn" data-toggle="tooltip" data-placement="top"
+            title="Start Board" style="display:none"><i class="fas fa-chess-board"></i></span>
+          <span type="button" class="btn btn-default" id="undoMoveBtn" data-toggle="tooltip" data-placement="top"
+            title="Undo Move"><i class="fas fa-undo-alt"></i></span>
+          <span type="button" class="btn btn-default" id="newGameBtn" data-toggle="tooltip" data-placement="top"
+            title="New Game"><i class="fas fa-chess-board"></i></span>
+          <!-- <span type="button" class="btn btn-default" id="flipBoardBtn" data-toggle="tooltip" data-placement="top"
+            title="Flip Board"><i class="fab fa-flipboard"></i></span> -->
+            <span type="button" class="btn btn-default" id="flipBoardBtn" data-toggle="tooltip" data-placement="top"
+            title="Flip Board"><i class="fas fa-arrows-alt-v"></i></span>
+          <span type="button" class="btn btn-default" id="setupBoardBtn" data-toggle="tooltip" data-placement="top"
+            title="Edit Board"><i class="far fa-edit"></i></span>
+        </div>
       </div>
 
       <!-- <div class="col col-md-1"></div> -->
@@ -149,7 +169,7 @@
           <input type="text" id="openingsInput"> -->
         </div>
 
-        <div id="whosTurn" class="row">
+        <div id="whosTurn" class="row ml-5 mt-5">
           <!-- White's turn -->
           <div class="col-6 mx-auto custom-control custom-radio">
             <input type="radio" class="custom-control-input" id="whiteTurn" name="turnRadios" checked>
@@ -188,24 +208,23 @@
           <!-- END OPENINGS DROPDOWN -->
 
           <!--TEST BUTTONS -->
-          <div class="col-7 pt-3">
-            <!-- <button id="ruyLopezBtn">Ruy Lopez</button>
+          <!-- <div class="col-7 pt-3"> -->
+          <!-- <button id="ruyLopezBtn">Ruy Lopez</button>
             <button id="italianGameBtn">Italian</button> -->
-            <!-- <button id="startPositionBtn">Start Position</button> -->
-            <div class="row">
+          <!-- <button id="startPositionBtn">Start Position</button> -->
+          <!-- <div class="row">
               <div class="col-12 col-lg-4 col text-nowrap text-center p-1">
                 <button id="flipBoardBtn" type="button" class="btn btn-dark">Flip Board</button>
               </div>
-              <!-- <button id="moveHistoryBtn">Move History</button> -->
               <div class="col-12 col-lg-4 text-nowrap text-center p-1">
                 <button id="newGameBtn" type="button" class="btn btn-dark">New Game</button>
               </div>
               <div class="col-12 col-lg-4 text-nowrap text-center p-1">
                 <button id="setupBoardBtn" type="button" class="btn btn-dark">Setup Board</button>
               </div>
-            </div>
-            <!-- END TEST BUTTONS -->
-          </div>
+            </div> -->
+          <!-- END TEST BUTTONS -->
+          <!-- </div> -->
         </div>
       </div>
 
@@ -222,6 +241,11 @@
           </div>
         </div>
       </div>
+
+      <!-- <div class="pair">
+        <label for=""></label>
+        <textarea class="" name="" id="" cols="30" rows="10"></textarea>
+      </div> -->
 
     </div>
 
@@ -283,11 +307,14 @@
 
   <script>
     $(document).ready(function () {
-
+      //animated navbar hamburger
       $('.navbar-toggler').on('click', function () {
 
         $('.animated-icon').toggleClass('open');
       });
+
+      //Enable popper.js tooltips
+      $('[data-toggle="tooltip"]').tooltip();
 
     });
   </script>

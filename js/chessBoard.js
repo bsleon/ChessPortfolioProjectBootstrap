@@ -223,6 +223,52 @@ $("#newGameBtn").on("click", function () {
 	$("#openingsList").selectpicker("refresh");
 });
 
+// Undo Last Move
+$("#undoMoveBtn").on("click", function () {
+	game.undo();
+	board.position(game.fen());
+	updateStatus();
+});
+
+// Clear Board
+$("#clearBoardBtn").on("click", function () {
+	setupBoard.clear();
+	game.load(setupBoard.fen() + " " + whosTurn() + " " + "KQkq - 0 1");
+});
+
+// Start Board
+$("#startBoardBtn").on("click", function () {
+	setupBoard.start();
+	game.load(setupBoard.fen() + " " + whosTurn() + " " + "KQkq - 0 1");
+});
+
+function validateBoard(board) {
+	game.load(setupBoard.fen());
+	if (board.fen() === "8/8/8/8/8/8/8/8") {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+//********************************TODO FIX THIS vvvvv*************************************
+//setupBoard is not updating it's fen when the board changes before it's storing old fen into game.load
+
+function setupOnChange(){
+	console.log("Piece Dropped!");
+	
+	if (setupBoard.fen() === "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR") {
+		//console.log("INITIAL POSITION!!!");
+	}
+	if(!validateBoard(setupBoard)){
+		//console.log("not valid!");
+		$("#setupBoardBtn").attr("disabled", "");
+	}
+	game.load(setupBoard.fen() + " " + whosTurn() + " " + "KQkq - 0 1");
+}
+
+
 // If Play button clicked, animate moves from current position until end
 // $("#playBtn").on("click", async function () {
 // 	stop = !stop;
@@ -254,7 +300,23 @@ setupBoardButton.click(function () {
 	// $("#setupModal").modal("toggle");
 
 	if (!setupBoardFlag) {
-		setupBoardButton.html("Continue Here");
+		// setupBoardButton.html("Continue Here");
+		// $("#setupBoardBtn i").attr("class", "fas fa-chess-knight");
+		$("#setupBoardBtn i").attr("class", "fas fa-chess-king");
+		$("#setupBoardBtn").attr("data-original-title", "Continue Here");
+		// $("#undoMoveBtn").attr("class", "btn btn-default disabled");
+		// $("#undoMoveBtn").attr("data-original-title", "(Disabled) Undo Move");
+		// $("#newGameBtn").attr("class", "btn btn-default disabled");
+		// $("#newGameBtn").attr("data-original-title", "(Disabled) New Game");
+		$("#newGameBtn").hide();
+		$("#undoMoveBtn").hide();
+		$("#clearBoardBtn").show();
+		$("#startBoardBtn").show();
+		// $("#setupBoardBtn").attr("data-toggle", "");
+		// $("#setupBoardBtn").attr("data-toggle", "");
+		// $("#setupBoardBtn").attr("title", "NEW_TITLE")
+		// 	.tooltip("fixTitle")
+		// 	.tooltip("show");
 		$("#openingsList").attr("disabled", "");
 		$(".selectpicker").selectpicker("refresh");
 		$("#myBoard").hide();
@@ -263,7 +325,8 @@ setupBoardButton.click(function () {
 		setupBoard = Chessboard("myBoard2", {
 			draggable: true,
 			dropOffBoard: "trash",
-			sparePieces: true
+			sparePieces: true,
+			onChange: setupOnChange
 		});
 		$(window).resize(setupBoard.resize);
 
@@ -273,23 +336,42 @@ setupBoardButton.click(function () {
 
 		fen = board.fen();
 		setupBoard.position(fen);
+		setupBoardFlag = !setupBoardFlag;
 	}
 	else {
-		setupBoardButton.html("Setup Board");
-		$("#openingsList").removeAttr("disabled");
-		$(".selectpicker").selectpicker("refresh");
-		$("#myBoard").show();
-		$("#playthroughButtons").show();
-		$("#whosTurn").hide();
-		fen = setupBoard.fen();
-		board.position(fen);
-		game.reset();
-		game = new Chess(fen + " " + whosTurn() + " " + "KQkq - 0 1"); //FIX THE CONCAT ON THIS TO BE RADIO SETTINGS LATER
-		updateFen();
-		setupBoard.destroy();
+		// setupBoardButton.html("Setup Board");
+		if (validateBoard(setupBoard)) {
+			$("#setupBoardBtn i").attr("class", "far fa-edit");
+			$("#setupBoardBtn").attr("data-original-title", "Edit Board");
+			$("#undoMoveBtn").attr("class", "btn btn-default");
+			$("#undoMoveBtn").attr("data-original-title", "Undo Move");
+			$("#newGameBtn").attr("class", "btn btn-default");
+			$("#newGameBtn").attr("data-original-title", "New Game");
+			$("#newGameBtn").show();
+			$("#undoMoveBtn").show();
+			$("#clearBoardBtn").hide();
+			$("#startBoardBtn").hide();
+			$("#openingsList").removeAttr("disabled");
+			$(".selectpicker").selectpicker("refresh");
+			$("#myBoard").show();
+			$("#playthroughButtons").show();
+			$("#whosTurn").hide();
+			fen = setupBoard.fen();
+			board.position(fen);
+			game.reset();
+			game = new Chess(fen + " " + whosTurn() + " " + "KQkq - 0 1"); //FIX THE CONCAT ON THIS TO BE RADIO SETTINGS LATER
+			updateFen();
+			setupBoard.destroy();
+			setupBoardFlag = !setupBoardFlag;
+		}
 	}
-	setupBoardFlag = !setupBoardFlag;
 });
+
+// if (setupBoard != null)
+// {
+// 	console.log("CLEAR");
+// 	$("#clearBoardBtn").on("click", setupBoard.clear());
+// }
 
 //^^^^^Add white or blacks turn radio buttons and stuff***************^^^^^^^
 //TODO CHANGE THIS TO A DROPDOWN MAYBE???
@@ -410,6 +492,11 @@ $(document).ready(function () {
 
 	$(window).resize(function () {
 		setBoarders();
+
+		const boardContainerHeight = $("#myBoard").height();
+		// const playThroughButtonsHeight = $("#playThroughButtons").height();
+		const loadButtonsHeight = $("#loadButtons").height();
+		$("#movesCard").css("height", boardContainerHeight - loadButtonsHeight);
 	});
 
 	//center action buttons vertically
@@ -422,7 +509,7 @@ $(document).ready(function () {
 	// const playThroughButtonsHeight = $("#playThroughButtons").height();
 	const loadButtonsHeight = $("#loadButtons").height();
 	$("#movesCard").css("height", boardContainerHeight - loadButtonsHeight);
-	
+
 
 	//OPENINGS DROPDOWN
 	let openingsDropdown = $("#openingsList");

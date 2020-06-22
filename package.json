@@ -32,7 +32,7 @@
   "dependencies": {
     "@chrisoakman/chessboardjs": "^1.0.0",
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^4.3.1",
     "bootstrap-select": "^1.13.17",
     "chess.js": "^0.10.3",
     "fontawesome": "^5.6.3",

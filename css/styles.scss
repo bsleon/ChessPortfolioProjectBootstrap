@@ -39,8 +39,24 @@ body {
     bottom: var(--border-spacing); */
 }
 
+// MOVE NOTATION OUTSIDE BOARD
+// .alpha-d2270 {
+//     bottom: -25px !important;
+//     left: 40px !important;
+// }
+
+// MOVE NOTATION OUTSIDE BOARD
+// .numeric-fc462 {
+//     left: -25px !important;
+//     top: 40px !important;
+// }
+
 pre {
     color: white;
+}
+
+.progress {
+    background-color: #343A40;
 }
 
 // .bottomRow {

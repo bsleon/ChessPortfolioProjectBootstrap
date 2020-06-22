@@ -30,6 +30,9 @@ body {
 pre {
   color: white; }
 
+.progress {
+  background-color: #343A40; }
+
 .actionButtons {
   border: solid rgba(200, 200, 200, 0.5) 1px;
   border-radius: var(--border-radius); }

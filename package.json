@@ -14,11 +14,12 @@
     "imagemin": "imagemin img/chesspieces/wikipedia/* -o dist/img/chesspieces/wikipedia",
     "usemin": "usemin index.html -d dist --htmlmin -o dist/index.html && usemin playcomputer.html -d dist --htmlmin -o dist/playcomputer.html && usemin contactus.html -d dist --htmlmin -o dist/contactus.html",
     "clean": "rimraf dist",
-    "build": "npm run clean && npm run imagemin && npm run copyfonts && npm run usemin"
+    "build": "npm run clean && npm run imagemin && npm run copyfonts"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-minify": "^0.5.1",
     "copyfiles": "^2.0.0",
     "imagemin-cli": "^3.0.0",
     "lite-server": "^2.3.0",
@@ -38,6 +39,8 @@
     "jquery": "^3.3.1",
     "mdbootstrap": "^4.19.0",
     "popper.js": "^1.12.9",
-    "stockfish": "^10.0.2"
+    "stockfish": "^10.0.2",
+    "uglify-js": "^3.10.0",
+    "usemin": "^0.6.0"
   }
 }

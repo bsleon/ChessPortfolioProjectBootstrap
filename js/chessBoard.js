@@ -7,6 +7,70 @@ var $status = $("#status");
 var $fen = $("#fen");
 var $pgn = $("#pgn");
 
+// const loadApiBtn = document.getElementById("loadApi");
+const openingsUrl = "https://explorer.lichess.ovh/master?fen=";
+const commonReplies = document.getElementById("commonReplies");
+const openingTitle = document.getElementById("openingTitle");
+let openingName = "";
+
+const searchOpening = async (chessGame) => {
+	// console.log(game.fen());
+	const res = await fetch(`${openingsUrl}${chessGame.fen()}`);
+	// console.log(res);
+	return await res.json();
+};
+
+displayOpeningsInfo = async () => {
+	commonReplies.innerHTML = "";
+	let info =  await searchOpening(game);
+	// console.log(info);
+	if (info.opening) {
+		openingName = info.opening.name;
+		openingTitle.innerHTML = `
+		"${info.opening.name}"`;
+	}
+	else {
+		openingTitle.innerHTML = `
+		"${openingName}"`;
+	}
+
+	for (let i = 0; i < info.moves.length; ++i) {
+		const commonMove = info.moves[i].san;
+		const game2 = new Chess();
+		game2.load(game.fen());
+		game2.move(commonMove);
+		let info2 = await searchOpening(game2);
+
+		const totalGames = info2.white + info2.black + info2.draws;
+		const whitePerc = Math.round((info2.white / totalGames) * 100);
+		const blackPerc = Math.round((info2.black / totalGames) * 100);
+		const drawsPerc = Math.round((info2.draws / totalGames) * 100);
+	
+		const node = document.createElement("li");
+		node.innerHTML = `
+			<div class="row">
+				<div class="col-1 p-0">
+				${commonMove}
+				</div>
+				<div class="progress col-11 p-0">
+					<div class="progress-bar bg-light" role="progressbar" style="width:${whitePerc}%; color:black" aria-valuenow="${whitePerc}" aria-valuemin="0"
+					aria-valuemax="100">${whitePerc}%</div>
+					<div class="progress-bar bg-secondary" role="progressbar" style="width:${drawsPerc}%" aria-valuenow="${drawsPerc}"
+					aria-valuemin="0" aria-valuemax="100">${drawsPerc}%</div>
+					<div class="progress-bar bg-dark" role="progressbar" style="width:${blackPerc}%" aria-valuenow="{blackPerc}" aria-valuemin="0"
+					aria-valuemax="100">${blackPerc}% </div>
+				</div>
+				
+			</div>
+		`;
+		commonReplies.appendChild(node);
+
+	}
+	// board.position(game.fen());
+};
+
+displayOpeningsInfo();
+
 // eslint-disable-next-line no-unused-vars
 function onDragStart(source, piece, position, orientation) {
 	// do not pick up pieces if the game is over
@@ -24,7 +88,7 @@ function onDrop(source, target) {
 	var move = game.move({
 		from: source,
 		to: target,
-		promotion: "q" // NOTE: always promote to a queen for example simplicity
+		promotion: "q" // NOTE: promote to queen
 	});
 
 	// illegal move
@@ -33,6 +97,8 @@ function onDrop(source, target) {
 	fensMaker(); //create a history of fens during normal play
 
 	updateStatus();
+	// searchOpening();
+	displayOpeningsInfo();
 }
 
 // update the board position after the piece snap
@@ -219,6 +285,7 @@ $("#newGameBtn").on("click", function () {
 	updateStatus();
 	$("#openingsList").prop("selectedIndex", 0);
 	$("#openingsList").selectpicker("refresh");
+	displayOpeningsInfo();
 });
 
 // Undo Last Move
@@ -227,6 +294,8 @@ $("#undoMoveBtn").on("click", function () {
 	board.position(game.fen());
 	fens = [];
 	updateStatus();
+	// searchOpening();
+	displayOpeningsInfo();
 });
 
 // Clear Board
@@ -254,13 +323,13 @@ function validateBoard(board) {
 //********************************TODO FIX THIS vvvvv*************************************
 //setupBoard is not updating it's fen when the board changes before it's storing old fen into game.load
 
-function setupOnChange(){
+function setupOnChange() {
 	console.log("Piece Dropped!");
-	
+
 	if (setupBoard.fen() === "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR") {
 		//console.log("INITIAL POSITION!!!");
 	}
-	if(!validateBoard(setupBoard)){
+	if (!validateBoard(setupBoard)) {
 		//console.log("not valid!");
 		$("#setupBoardBtn").attr("disabled", "");
 	}
@@ -572,7 +641,11 @@ $(document).ready(function () {
 	// 	updateFen();
 	// });
 
+	//Openings Statistics
+
+	// const openingsFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 
+	// loadApiBtn.addEventListener("click", searchOpening);
 
 });

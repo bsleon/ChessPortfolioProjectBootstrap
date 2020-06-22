@@ -22,16 +22,19 @@ const searchOpening = async (chessGame) => {
 
 displayOpeningsInfo = async () => {
 	commonReplies.innerHTML = "";
-	let info =  await searchOpening(game);
-	// console.log(info);
+	let info = await searchOpening(game);
+	console.log(info);
 	if (info.opening) {
-		openingName = info.opening.name;
+		openingName = info.opening.eco + " " + info.opening.name;
 		openingTitle.innerHTML = `
-		"${info.opening.name}"`;
+		${openingName}`;
+	}
+	else if (game.fen() === "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1") {
+		openingTitle.innerHTML = "";
 	}
 	else {
 		openingTitle.innerHTML = `
-		"${openingName}"`;
+		${openingName}`;
 	}
 
 	for (let i = 0; i < info.moves.length; ++i) {
@@ -45,14 +48,17 @@ displayOpeningsInfo = async () => {
 		const whitePerc = Math.round((info2.white / totalGames) * 100);
 		const blackPerc = Math.round((info2.black / totalGames) * 100);
 		const drawsPerc = Math.round((info2.draws / totalGames) * 100);
-	
+
 		const node = document.createElement("li");
 		node.innerHTML = `
 			<div class="row">
 				<div class="col-1 p-0">
 				${commonMove}
 				</div>
-				<div class="progress col-11 p-0">
+				<div class="col-1 p-0">
+				${totalGames.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+				</div>
+				<div class="progress col-10 p-0">
 					<div class="progress-bar bg-light" role="progressbar" style="width:${whitePerc}%; color:black" aria-valuenow="${whitePerc}" aria-valuemin="0"
 					aria-valuemax="100">${whitePerc}%</div>
 					<div class="progress-bar bg-secondary" role="progressbar" style="width:${drawsPerc}%" aria-valuenow="${drawsPerc}"

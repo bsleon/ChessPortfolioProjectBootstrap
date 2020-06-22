@@ -33,6 +33,15 @@ pre {
 .progress {
   background-color: #343A40; }
 
+#openingsInfoHeader {
+  border-bottom: 1px solid white;
+  background-color: white;
+  color: #686868;
+  border-radius: 5px; }
+
+#commonReplies {
+  padding-left: 25px; }
+
 .actionButtons {
   border: solid rgba(200, 200, 200, 0.5) 1px;
   border-radius: var(--border-radius); }
